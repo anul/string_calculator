@@ -1,14 +1,26 @@
+# Ruby on Rails code
+# execute code using string_calculator.rb
+
 def add(numbers)
-	if numbers.nil? or numbers.empty?
+	# custom delimiter
+  numbers = numbers.to_s
+  delimiter = ","
+  if numbers[0] == "/" and numbers[1] == "/"
+		delimiter = numbers[2]
+		numbers = numbers.sub("//"+delimiter,"")
+  end
+
+	if numbers.empty?
 		total = 0
 	else
-		total = numbers.split(",").map {|n| n.split("\n")}.flatten
+		total = numbers.split(delimiter).map {|n| n.split("\n")}.flatten
 		total = total.map {|n| n.to_i}.inject(&:+)
 	end
 	total
 end
 
-puts add("")
-puts add("1")
-puts add("1,5")
-puts add("1\n2,3")
+puts 'input: "", output: '+add("").to_s
+puts 'input: "1", output: '+add("1").to_s
+puts 'input: "1,5", output: '+add("1,5").to_s
+puts 'input: "1\n2,3", output: '+add("1\n2,3").to_s
+puts 'input: "//;\n1;2", output: '+add("//;\n1;2").to_s
